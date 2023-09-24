@@ -1,4 +1,18 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  output: "export",
 
-module.exports = nextConfig
+  images: {
+    loader: "custom",
+    loaderFile: "./loaders/my-image-loader.ts",
+    dangerouslyAllowSVG: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*",
+      },
+    ],
+  },
+};
+
+module.exports = nextConfig;
