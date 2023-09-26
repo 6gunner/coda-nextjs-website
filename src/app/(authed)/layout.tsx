@@ -4,25 +4,17 @@ import { redirect } from "next/navigation";
 
 // 自定义的导入
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-
+import { NextAuthProvider } from "@/app/providers";
 const siteTitle = "Coda Admin Website";
-
-async function checkAuthentication() {
-  const session = await getServerSession(authOptions);
-  console.log(`session = ${session}`);
-  if (session && session.user) {
-    return true;
-  }
-  return false;
-}
 
 export default async function AuthedLayout({
   children, // will be a page or nested layout
 }: {
   children: React.ReactNode;
 }) {
-  const isAuthed = checkAuthentication();
-  if (!isAuthed) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
     redirect("/login");
   }
 
@@ -43,7 +35,7 @@ export default async function AuthedLayout({
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      {children}
+      <NextAuthProvider session={session}>{children}</NextAuthProvider>
     </>
   );
 }

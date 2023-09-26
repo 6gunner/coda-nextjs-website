@@ -12,5 +12,6 @@ const fetchData = async (host: string) => {
 export default async function Dashboard() {
   const host = headers().get("host");
   const data = await fetchData(host!);
+
   return <h1>{data}</h1>;
 }

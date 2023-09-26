@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 
 // 本地导入
 import StyledComponentsRegistry from "@/lib/AntdRegistry";
+import WagmiConfigRegistry from "@/lib/WagmiRegistry";
 
 import "../styles/global.css";
 
@@ -22,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <WagmiConfigRegistry>
+          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        </WagmiConfigRegistry>
       </body>
     </html>
   );
