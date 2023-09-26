@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import Head from "next/head";
+import { signIn } from "next-auth/react";
 
 // 自定义的import
 import useStyles from "./login_style";
@@ -33,7 +34,10 @@ function LoginPage() {
   }
 
   const onSubmit = (data: LoginFormData) => {
-    console.log("Form was submitted! data: =" + JSON.stringify(data, null, 2));
+    console.log("Form was submitted!");
+    signIn("credentials", {
+      ...data,
+    });
   };
 
   const { register, handleSubmit, formState } = useForm<LoginFormData>();
@@ -137,6 +141,15 @@ function LoginPage() {
               focus-visible:outline-indigo-600"
               >
                 Sign in
+              </button>
+
+              <button
+                onClick={() => signIn("github")}
+                type="button"
+                className="flex w-full justify-center rounded-md bg-slate-800 my-4 
+                px-3 py-1.5 text-white text-sm font-semibold leading-6"
+              >
+                Sign in with Github
               </button>
             </div>
           </form>
